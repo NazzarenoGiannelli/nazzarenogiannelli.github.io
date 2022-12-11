@@ -1,0 +1,150 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: rgb(10, 10, 10);
+	color: rgb(240, 240, 240);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 100vw;
+	font-family: Verdana, Tahoma, sans-serif;
+}
+
+header {
+	width: 95%;
+	max-width: 788px;
+	display: flex;
+	justify-content: flex-end;
+	padding: 12px;
+	margin-top: 15px;
+}
+
+.share-button {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	background-color: rgb(240, 240, 240);
+}
+
+.share-button svg {
+	margin-left: 8px;
+	margin-top: 8px;
+	width: 24px;
+	height: 24px;
+	fill: black;
+}
+
+.container {
+	width: 91%;
+	max-width: 680px;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.footer {
+	width: 91%;
+	max-width: 680px;
+	margin: 10px 10px 36px 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;	
+}
+
+h1 {
+	font-size: 20px;
+	margin-bottom: 6px;
+}
+
+h2 {
+	font-size: 14px;
+	margin-bottom: 36px;
+}
+
+h3 {
+	font-size: 14px;
+	margin-top: 24px;
+	margin-bottom: 12px;
+}
+
+h4 {
+	font-size: 11px;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+a {
+	text-decoration: none;
+	color: rgb(240, 240, 240);
+}
+
+.tile {
+	width: 100%;
+	background-color: rgb(37, 37, 37);
+	margin: 7px;
+	border-radius: 17px;
+	display: flex;
+	justify-content: space-between;
+	opacity: 85%;
+}
+
+.tile:hover {
+	transition: cubic-bezier(0.07, 1.41, 0.82, 1.41) 0.2s;
+	transform: scale(1.02);
+	opacity: 100%;
+}
+
+.tile-share-button {
+	margin: 8px;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	background-color: rgb(52, 52, 52);
+}
+
+.tile-share-button svg {
+	margin-left: 8px;
+	margin-top: 8px;
+	width: 24px;
+	height: 24px;
+	fill: white;
+}
+
+.image-container {
+	height: 96px;
+	width: 96px;
+	border-radius: 48px;
+	overflow: hidden;
+}
+
+.image-container img {
+	height: 100%;
+}
+
+.icon {
+	margin: 12px 8px;
+	width: 32px;
+	height: 32px;
+}
+
+.icon svg {
+	width: 32px;
+	height: 32px;
+	fill: white;
+}
+
+.contacts {
+	display: inline-block;
+}
+
+.contact-icon:hover {
+	opacity: 50%;
+}
+
+.contact-icon svg {
+	width: 32px;
+	height: 32px;
+	fill: white;
+	margin: 6px 12px 24px 12px;
+}
