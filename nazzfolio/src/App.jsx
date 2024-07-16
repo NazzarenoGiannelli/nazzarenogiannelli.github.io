@@ -22,9 +22,9 @@ const PersonalWebsite = () => {
   ];
 
   const products = [
-    { image: 'https://via.placeholder.com/400x300', title: 'Blender Addons', description: 'Short description of the product or tool' },
-    { image: 'https://via.placeholder.com/400x300', title: 'Unreal Engine Tools', description: 'Short description of the product or tool' },
-    { image: 'https://via.placeholder.com/400x300', title: 'Notion Templates', description: 'Short description of the product or tool' }
+    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'Blender Addons', description: 'Short description of the product or tool' },
+    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'Unreal Engine Tools', description: 'Short description of the product or tool' },
+    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'Notion Templates', description: 'Short description of the product or tool' }
   ];
 
   const social = [
@@ -158,17 +158,14 @@ const PersonalWebsite = () => {
         <section id="products" className="mb-20">
           <h2 className="text-3xl md:text-4xl mb-6" style={{ fontFamily: 'Playfair Display, serif' }}>Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {products.map(({image, title, description}, index) => (
-            <div key={index} className="bg-[#121212] hover:border-[#4037db] overflow-hidden transform transition-all duration-300 ease-in-out hover:scale-105 border border-gray-800">
+              {products.map(({image, link, title, description}, index) => (
+            <a href={link} target='_blank' rel='noreferrer' key={index} className="bg-[#121212] hover:border-[#4037db] overflow-hidden transform transition-all duration-300 ease-in-out hover:scale-105 border border-gray-800">
               <img src={image} alt="Product preview" className="w-full h-80 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>{title}</h3>
                 <p className="text-gray-400 mb-4">{description}</p>
-                <a href="#contact" className="bg-[#4037db] text-white hover:border-2 border-[#4037db] hover:bg-inherit font-bold py-2 px-6 rounded-none transition-colors duration-200 animate-fade-in border">
-                  Learn more
-                </a>
               </div>
-            </div>
+            </a>
             ))}
           </div>
         </section>
