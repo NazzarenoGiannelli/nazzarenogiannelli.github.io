@@ -8,23 +8,23 @@ const PersonalWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const expertise = [
-    { image: 'https://via.placeholder.com/400x300', title: 'Technical Manager & Speaker', description: 'Creating photorealistic 3D renderings and animations' },
-    { image: 'https://via.placeholder.com/400x300', title: 'Training', description: 'Experienced Unreal Authorized Instructor, Blender trainer. Notion and Coda ambassador' },
-    { image: 'https://via.placeholder.com/400x300', title: 'Real-Time Design', description: 'Product design, interior design and real-time architectural visualization' },
-    { image: 'https://via.placeholder.com/400x300', title: '3D Pipeline Development', description: 'Extensive knowledge into digital, interactive content workflows' },
-    { image: 'https://via.placeholder.com/400x300', title: 'Junior Full Stack Developer', description: 'I never stop learning, so in 2024 I am focusing on full stack development' }
+    { image: 'https://placehold.co/400x300', title: 'Technical Manager & Speaker', description: 'Creating photorealistic 3D renderings and animations' },
+    { image: 'https://placehold.co/400x300', title: 'Training', description: 'Experienced Unreal Authorized Instructor, Blender trainer. Notion and Coda ambassador' },
+    { image: 'https://placehold.co/400x300', title: 'Real-Time Design', description: 'Product design, interior design and real-time architectural visualization' },
+    { image: 'https://placehold.co/400x300', title: '3D Pipeline Development', description: 'Extensive knowledge into digital, interactive content workflows' },
+    { image: 'https://placehold.co/400x300', title: 'Junior Full Stack Developer', description: 'I never stop learning, so in 2024 I am focusing on full stack development' }
   ];
 
   const projects = [
-    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'R3PLICA', description: 'Branded furniture certified digital replicas for real-time architectural visualization' },
-    { image: 'https://via.placeholder.com/400x300', link: 'https://metayouman.com/', title: 'Metayouman', description: 'Brief description of the architectural visualization project' },
-    { image: 'https://via.placeholder.com/400x300', link: 'https://www.instagram.com/art_picker/', title: 'Art Picker', description: 'Brief description of the architectural visualization project' }
+    { image: 'https://placehold.co/400x300', link: 'https://r3plica.space/', title: 'R3PLICA', description: 'Branded furniture certified digital replicas for real-time architectural visualization' },
+    { image: 'https://placehold.co/400x300', link: 'https://metayouman.com/', title: 'Metayouman', description: 'Brief description of the architectural visualization project' },
+    { image: 'https://placehold.co/400x300', link: 'https://www.instagram.com/art_picker/', mobile: 'instagram://user?username=art_picker', title: 'Art Picker', description: 'Brief description of the architectural visualization project' }
   ];
 
   const products = [
-    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'Blender Addons', description: 'Short description of the product or tool' },
-    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'Unreal Engine Tools', description: 'Short description of the product or tool' },
-    { image: 'https://via.placeholder.com/400x300', link: 'https://r3plica.space/', title: 'Notion Templates', description: 'Short description of the product or tool' }
+    { image: 'https://placehold.co/400x300', link: 'https://r3plica.space/', title: 'Blender Addons', description: 'Short description of the product or tool' },
+    { image: 'https://placehold.co/400x300', link: 'https://r3plica.space/', title: 'Unreal Engine Tools', description: 'Short description of the product or tool' },
+    { image: 'https://placehold.co/400x300', link: 'https://r3plica.space/', title: 'Notion Templates', description: 'Short description of the product or tool' }
   ];
 
   const social = [
@@ -88,7 +88,7 @@ const PersonalWebsite = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-start overflow-hidden border-b border-gray-800 px-4"
+      <section className="relative h-screen flex items-center justify-start overflow-hidden border-b border-gray-800 px-4"
         style={{
           backgroundImage: `url(${hero})`,
           backgroundSize: 'cover',
