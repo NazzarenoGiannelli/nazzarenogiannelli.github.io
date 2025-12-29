@@ -45,8 +45,8 @@ const LinksPage = () => {
         {/* Profile */}
         <div className="flex flex-col items-center mb-10">
           <div
-            className="w-24 h-24 rounded-full overflow-hidden mb-4 ring-2 ring-offset-2 ring-offset-[#0a0a0a]"
-            style={{ ringColor: accent }}
+            className="w-24 h-24 rounded-full overflow-hidden mb-4"
+            style={{ boxShadow: `0 0 0 2px #0a0a0a, 0 0 0 4px ${accent}` }}
           >
             <img
               src="https://filedn.com/lB8NwrtyWpeFEcbezh9Lj4R/Images/Naz_profile_picture_blue.jpg"
