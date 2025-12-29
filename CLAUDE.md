@@ -4,42 +4,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio website (nazzarenogiannelli.github.io) with two versions:
-- **Active**: React + Vite application in `/nazzfolio`
-- **Legacy**: Static HTML at root level (superseded)
+Personal links page (nazzareno.xyz) - Terminal Elegance style.
+
+- **Source**: React + Vite in `/nazzfolio`
+- **Built output**: Root folder (for GitHub Pages)
 
 ## Development Commands
 
-All commands run from the `/nazzfolio` directory:
+Run from `/nazzfolio` directory:
 
 ```bash
-# Start dev server
-npm run dev
-
-# Production build
-npm run build
-
-# Preview production build
-npm run preview
-
-# Lint code
-npm run lint
+npm run dev      # Start dev server
+npm run deploy   # Build and copy to root for GitHub Pages
+npm run lint     # Lint code
 ```
 
 ## Tech Stack
 
-- **Runtime**: Node.js with npm
-- **Framework**: React 18 with Vite
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React, Simple Icons
-- **Animation**: react-typed for text effects
+- React 18 + Vite
+- Tailwind CSS
+- Lucide React icons
+- Fonts: Playfair Display (titles), Fira Code (body)
+
+## Design
+
+- Dark theme: #0a0a0a background
+- Accent color: #382FBC (electric blue)
+- Terminal-style `//` section labels
+- Blinking cursor animation
 
 ## Architecture
 
-Single-page portfolio with monolithic `App.jsx` component containing all sections (hero, about, expertise, projects, products, contact). Data for projects, expertise areas, and products are defined as arrays within the component and rendered via map.
-
-Design uses dark theme with purple accent (#4037db) and fonts from Google Fonts (Playfair Display, Fira Sans, Roboto Mono).
+Single `App.jsx` component with data arrays for links (social, projects, products, contact). Simple, flat structure - no routing needed.
 
 ## Deployment
 
-Static site hosted on GitHub Pages. The `CNAME` file configures custom domain settings.
+1. Run `npm run deploy` from `/nazzfolio`
+2. Commit and push to master
+3. GitHub Pages serves from root
