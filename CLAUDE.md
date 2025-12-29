@@ -39,6 +39,10 @@ Single `App.jsx` component with data arrays for links (social, projects, product
 
 ## Deployment
 
-1. Run `npm run deploy` from `/nazzfolio`
-2. Commit and push to master
-3. GitHub Pages serves from root
+Automated via GitHub Actions. Just push to master:
+
+```bash
+git add -A && git commit -m "Update" && git push
+```
+
+The workflow builds the React app and deploys to GitHub Pages automatically.
