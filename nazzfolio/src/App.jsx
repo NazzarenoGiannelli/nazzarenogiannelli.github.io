@@ -1,22 +1,30 @@
-import { Github, Linkedin, Youtube, Mail, Calendar, ExternalLink, Instagram } from 'lucide-react';
+import {
+  GithubLogo,
+  LinkedinLogo,
+  YoutubeLogo,
+  InstagramLogo,
+  XLogo,
+  TiktokLogo,
+  ThreadsLogo,
+  Envelope,
+  Calendar,
+  ArrowSquareOut,
+} from '@phosphor-icons/react';
 
 const LinksPage = () => {
   const accent = '#382FBC';
 
   const socialLinks = [
-    { Icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/nazzarenogiannelli' },
-    { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/nazzarenogiannelli' },
-    { Icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/@NazzarenoGiannelliCG' },
-    { Icon: () => (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-      </svg>
-    ), label: 'X', href: 'https://twitter.com/nazzagnl' },
+    { Icon: LinkedinLogo, label: 'LinkedIn', href: 'https://www.linkedin.com/in/nazzgiannelli' },
+    { Icon: InstagramLogo, label: 'Instagram', href: 'https://www.instagram.com/nazzgiannelli' },
+    { Icon: YoutubeLogo, label: 'YouTube', href: 'https://www.youtube.com/@nazzgiannelli' },
+    { Icon: TiktokLogo, label: 'TikTok', href: 'https://www.tiktok.com/@nazzgiannelli' },
+    { Icon: ThreadsLogo, label: 'Threads', href: 'https://www.threads.net/@nazzgiannelli' },
+    { Icon: XLogo, label: 'X', href: 'https://x.com/nazzgiannelli' },
   ];
 
   const projects = [
     { label: 'R3PLICA', desc: 'Digital furniture replicas', href: 'https://www.r3plica.space/' },
-    { label: 'Narrami', desc: 'AI-powered storytelling', href: 'https://narrami.app' },
     { label: 'Art Picker', desc: 'Curated art discoveries', href: 'https://www.instagram.com/art_picker' },
   ];
 
@@ -27,10 +35,9 @@ const LinksPage = () => {
   ];
 
   const contactLinks = [
-    { Icon: Mail, href: 'mailto:nazzareno.giannelli@gmail.com', label: 'Email' },
+    { Icon: Envelope, href: 'mailto:nazzareno.giannelli@gmail.com', label: 'Email' },
     { Icon: Calendar, href: 'https://tidycal.com/nazzareno', label: 'Book a call' },
-    { Icon: Linkedin, href: 'https://www.linkedin.com/in/nazzarenogiannelli/', label: 'LinkedIn' },
-    { Icon: Github, href: 'https://github.com/NazzarenoGiannelli', label: 'GitHub' },
+    { Icon: GithubLogo, href: 'https://github.com/NazzarenoGiannelli', label: 'GitHub' },
   ];
 
   return (
@@ -83,7 +90,7 @@ const LinksPage = () => {
               className="text-gray-400 hover:text-white transition-colors duration-200"
               title={label}
             >
-              <Icon className="w-6 h-6" />
+              <Icon size={24} weight="regular" />
             </a>
           ))}
         </div>
@@ -107,7 +114,7 @@ const LinksPage = () => {
                   <span className="text-white text-sm">{label}</span>
                   {desc && <span className="text-gray-500 text-xs ml-2">— {desc}</span>}
                 </div>
-                <ExternalLink className="w-4 h-4 text-gray-600 group-hover:text-[#382FBC] transition-colors" />
+                <ArrowSquareOut size={16} weight="regular" className="text-gray-600 group-hover:text-[#382FBC] transition-colors" />
               </a>
             ))}
           </div>
@@ -129,7 +136,7 @@ const LinksPage = () => {
                 style={{ backgroundColor: '#111' }}
               >
                 <span className="text-white text-sm">{label}</span>
-                <ExternalLink className="w-4 h-4 text-gray-600 group-hover:text-[#382FBC] transition-colors" />
+                <ArrowSquareOut size={16} weight="regular" className="text-gray-600 group-hover:text-[#382FBC] transition-colors" />
               </a>
             ))}
           </div>
@@ -150,7 +157,7 @@ const LinksPage = () => {
                 className="text-gray-500 hover:text-[#382FBC] transition-colors duration-200"
                 title={label}
               >
-                <Icon className="w-5 h-5" />
+                <Icon size={20} weight="regular" />
               </a>
             ))}
           </div>

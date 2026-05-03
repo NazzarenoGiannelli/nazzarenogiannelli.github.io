@@ -21,9 +21,9 @@ npm run lint     # Lint code
 
 ## Tech Stack
 
-- React 18 + Vite
+- React 19 + Vite
 - Tailwind CSS
-- Lucide React icons
+- Phosphor Icons (`@phosphor-icons/react`)
 - Fonts: Playfair Display (titles), Fira Code (body)
 
 ## Design
