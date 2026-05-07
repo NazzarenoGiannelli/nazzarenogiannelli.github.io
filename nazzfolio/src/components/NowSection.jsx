@@ -1,20 +1,20 @@
-const ACCENT = '#382FBC';
+const ACCENT = "#382FBC";
 
 // Edit these freely — short, declarative, present tense.
 const ITEMS = [
-  { label: 'Building', value: 'R3PLICA — digital furniture replicas' },
-  { label: 'Tinkering', value: 'Blender + Unreal pipelines' },
-  { label: 'Working on', value: 'AI chatbots @ Blitz' },
+  { label: "Building", value: "R3PLICA — digital replicas catalog" },
+  { label: "Developing", value: "interactive AI chatbots @ Blits" },
+  { label: "Learning", value: "how to share more to the world" },
 ];
 
 const NowSection = () => (
   <div className="mb-8">
-    <p className="text-gray-500 text-xs mb-3" style={{ color: '#888' }}>
+    <p className="text-gray-500 text-xs mb-3" style={{ color: "#888" }}>
       <span style={{ color: ACCENT }}>//</span> now
     </p>
     <div
       className="px-4 py-3 border border-gray-800"
-      style={{ backgroundColor: '#111' }}
+      style={{ backgroundColor: "#111" }}
     >
       <ul className="flex flex-col gap-1.5 text-xs">
         {ITEMS.map(({ label, value }) => (
