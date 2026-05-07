@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "predev": "node scripts/fetch-github-contributions.mjs",
     "fetch:contributions": "node scripts/fetch-github-contributions.mjs",
     "build": "node scripts/fetch-github-contributions.mjs && vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
