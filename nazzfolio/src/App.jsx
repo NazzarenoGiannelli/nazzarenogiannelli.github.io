@@ -11,6 +11,9 @@ import {
   ArrowSquareOut,
 } from '@phosphor-icons/react';
 import GitHubCalendar from './components/GitHubCalendar';
+import NowSection from './components/NowSection';
+import Stack from './components/Stack';
+import LocalTime from './components/LocalTime';
 
 const LinksPage = () => {
   const accent = '#382FBC';
@@ -96,6 +99,12 @@ const LinksPage = () => {
           ))}
         </div>
 
+        {/* Now */}
+        <NowSection />
+
+        {/* Stack */}
+        <Stack />
+
         {/* Projects */}
         <div className="mb-8">
           <p className="text-gray-500 text-xs mb-3" style={{ color: '#888' }}>
@@ -169,6 +178,7 @@ const LinksPage = () => {
 
         {/* Footer */}
         <footer className="text-center text-gray-600 text-xs">
+          <LocalTime />
           <p>from Italy with <span className="text-red-500">♥</span></p>
           <p className="mt-1">© {new Date().getFullYear()} Nazzareno Giannelli</p>
         </footer>
