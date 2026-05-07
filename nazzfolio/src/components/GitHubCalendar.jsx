@@ -19,10 +19,13 @@ const formatDate = (iso) => {
   });
 };
 
+const VISIBLE_WEEKS = 35;
+
 const GitHubCalendar = () => {
   if (!data || data.placeholder || !data.weeks?.length) return null;
 
   const { totalContributions, weeks } = data;
+  const visibleWeeks = weeks.slice(-VISIBLE_WEEKS);
 
   return (
     <div className="mb-10">
@@ -48,41 +51,39 @@ const GitHubCalendar = () => {
           </a>
         </div>
 
-        <div className="overflow-x-auto -mx-1 px-1 pb-1">
-          <div
-            className="grid grid-flow-col gap-[2px]"
-            style={{ gridTemplateRows: 'repeat(7, minmax(0, 1fr))' }}
-            role="img"
-            aria-label={`${totalContributions} GitHub contributions in the last year`}
-          >
-            {weeks.flatMap((week, wi) => {
-              const cells = [];
-              for (let di = 0; di < 7; di += 1) {
-                const day = week[di];
-                if (!day) {
-                  cells.push(
-                    <div
-                      key={`${wi}-${di}-empty`}
-                      style={{ width: 10, height: 10 }}
-                    />,
-                  );
-                  continue;
-                }
+        <div
+          className="grid gap-[2px] w-full"
+          style={{
+            gridTemplateColumns: `repeat(${visibleWeeks.length}, minmax(0, 1fr))`,
+            gridTemplateRows: 'repeat(7, minmax(0, 1fr))',
+            gridAutoFlow: 'column',
+          }}
+          role="img"
+          aria-label={`${totalContributions} GitHub contributions in the last year`}
+        >
+          {visibleWeeks.flatMap((week, wi) => {
+            const cells = [];
+            for (let di = 0; di < 7; di += 1) {
+              const day = week[di];
+              if (!day) {
                 cells.push(
-                  <div
-                    key={day.d}
-                    title={`${day.c} contribution${day.c === 1 ? '' : 's'} on ${formatDate(day.d)}`}
-                    style={{
-                      width: 10,
-                      height: 10,
-                      backgroundColor: LEVEL_COLORS[day.l] ?? LEVEL_COLORS[0],
-                    }}
-                  />
+                  <div key={`${wi}-${di}-empty`} className="aspect-square" />
                 );
+                continue;
               }
-              return cells;
-            })}
-          </div>
+              cells.push(
+                <div
+                  key={day.d}
+                  title={`${day.c} contribution${day.c === 1 ? '' : 's'} on ${formatDate(day.d)}`}
+                  className="aspect-square"
+                  style={{
+                    backgroundColor: LEVEL_COLORS[day.l] ?? LEVEL_COLORS[0],
+                  }}
+                />
+              );
+            }
+            return cells;
+          })}
         </div>
 
         <div className="flex items-center justify-end gap-1 mt-3 text-[10px] text-gray-500">
