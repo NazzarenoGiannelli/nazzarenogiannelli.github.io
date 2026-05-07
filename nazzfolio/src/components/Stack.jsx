@@ -13,6 +13,7 @@ const STACK = [
   {
     label: 'code',
     items: [
+      { name: 'Zed', href: 'https://zed.dev/' },
       { name: 'Python', href: 'https://www.python.org/' },
       { name: 'React', href: 'https://react.dev/' },
     ],
