@@ -1,0 +1,7 @@
+{
+  "totalContributions": 0,
+  "weeks": [],
+  "fetchedAt": "2026-05-07T08:37:00.980Z",
+  "placeholder": true,
+  "reason": "No GH_CONTRIBUTIONS_TOKEN or GITHUB_TOKEN in env"
+}

@@ -10,6 +10,7 @@ import {
   Calendar,
   ArrowSquareOut,
 } from '@phosphor-icons/react';
+import GitHubCalendar from './components/GitHubCalendar';
 
 const LinksPage = () => {
   const accent = '#382FBC';
@@ -141,6 +142,9 @@ const LinksPage = () => {
             ))}
           </div>
         </div>
+
+        {/* GitHub activity */}
+        <GitHubCalendar />
 
         {/* Contact */}
         <div className="mb-10">

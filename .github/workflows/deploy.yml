@@ -4,6 +4,9 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+  schedule:
+    # Refresh GitHub contributions calendar daily at 04:17 UTC
+    - cron: '17 4 * * *'
 
 permissions:
   contents: read
@@ -34,6 +37,9 @@ jobs:
 
       - name: Build
         working-directory: ./nazzfolio
+        env:
+          GH_CONTRIBUTIONS_TOKEN: ${{ secrets.GH_CONTRIBUTIONS_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_USERNAME: NazzarenoGiannelli
         run: npm run build
 
       - name: Copy CNAME to dist
