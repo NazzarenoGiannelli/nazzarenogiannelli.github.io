@@ -1,15 +1,13 @@
 const ACCENT = '#382FBC';
 
+// Edit these freely — daily-driver tools and languages, kept current.
 const STACK = [
-  { name: 'Blender', slug: 'blender' },
-  { name: 'Unreal Engine', slug: 'unrealengine' },
-  { name: 'React', slug: 'react' },
-  { name: 'Python', slug: 'python' },
-  { name: 'JavaScript', slug: 'javascript' },
-  { name: 'Notion', slug: 'notion' },
+  { label: 'software', items: ['Unreal Engine', 'Blender'] },
+  { label: 'code', items: ['Python', 'React'] },
+  { label: 'terminal', items: ['WezTerm', 'zoxide', 'lazygit', 'yazi'] },
+  { label: 'ai', items: ['Claude Code', 'Wispr Flow'] },
+  { label: 'utils', items: ['Listary', 'XYplorer', 'Granola'] },
 ];
-
-const iconUrl = (slug) => `https://cdn.simpleicons.org/${slug}/ffffff`;
 
 const Stack = () => (
   <div className="mb-8">
@@ -17,39 +15,22 @@ const Stack = () => (
       <span style={{ color: ACCENT }}>//</span> stack
     </p>
     <div
-      className="px-4 py-4 border border-gray-800"
+      className="px-4 py-3 border border-gray-800"
       style={{ backgroundColor: '#111' }}
     >
-      <ul className="grid grid-cols-3 sm:grid-cols-6 gap-y-4 gap-x-2">
-        {STACK.map(({ name, slug }) => (
-          <li
-            key={slug}
-            className="flex flex-col items-center gap-1.5 group"
-            title={name}
-          >
-            <span
-              aria-hidden="true"
-              className="w-6 h-6 transition-colors duration-200"
-              style={{
-                backgroundColor: '#888',
-                WebkitMaskImage: `url(${iconUrl(slug)})`,
-                maskImage: `url(${iconUrl(slug)})`,
-                WebkitMaskRepeat: 'no-repeat',
-                maskRepeat: 'no-repeat',
-                WebkitMaskPosition: 'center',
-                maskPosition: 'center',
-                WebkitMaskSize: 'contain',
-                maskSize: 'contain',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = ACCENT;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#888';
-              }}
-            />
-            <span className="text-[10px] text-gray-500 group-hover:text-gray-300 transition-colors">
-              {name}
+      <ul className="flex flex-col gap-1.5 text-xs">
+        {STACK.map(({ label, items }) => (
+          <li key={label} className="flex gap-3">
+            <span className="text-gray-500 w-20 shrink-0">{label}</span>
+            <span className="text-gray-300 flex-1">
+              {items.map((item, i) => (
+                <span key={item}>
+                  {item}
+                  {i < items.length - 1 && (
+                    <span className="text-gray-600 mx-1.5">·</span>
+                  )}
+                </span>
+              ))}
             </span>
           </li>
         ))}

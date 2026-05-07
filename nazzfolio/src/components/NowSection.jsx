@@ -4,8 +4,7 @@ const ACCENT = '#382FBC';
 const ITEMS = [
   { label: 'Building', value: 'R3PLICA — digital furniture replicas' },
   { label: 'Tinkering', value: 'Blender + Unreal pipelines' },
-  { label: 'Reading', value: '"Hyperion" — Dan Simmons' },
-  { label: 'Based in', value: 'Italy' },
+  { label: 'Working on', value: 'AI chatbots @ Blitz' },
 ];
 
 const NowSection = () => (
