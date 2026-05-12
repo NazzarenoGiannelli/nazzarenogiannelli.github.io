@@ -109,7 +109,7 @@ const LinksPage = () => {
             style={{ boxShadow: `0 0 0 2px #0a0a0a, 0 0 0 4px ${accent}` }}
           >
             <img
-              src="https://filedn.com/lB8NwrtyWpeFEcbezh9Lj4R/Images/Naz_profile_picture_blue.jpg"
+              src="/profile.jpg"
               alt="Nazzareno Giannelli"
               className="w-full h-full object-cover"
             />
