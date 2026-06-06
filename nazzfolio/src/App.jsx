@@ -54,6 +54,11 @@ const LinksPage = () => {
       href: "https://www.r3plica.space/",
     },
     {
+      label: "tuiboard",
+      desc: "Terminal kanban on markdown",
+      href: "https://tuiboard.nazzareno.xyz/",
+    },
+    {
       label: "Art Picker",
       desc: "Curated art discoveries",
       href: "https://www.instagram.com/art_picker",
