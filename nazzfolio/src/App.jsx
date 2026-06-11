@@ -14,6 +14,7 @@ import {
   ArrowUpRight,
 } from "@phosphor-icons/react";
 import logo from "./assets/Nlogo.svg";
+import GitHubCalendar from "./components/GitHubCalendar";
 import Scene3D from "./components/Scene3D";
 import Cursor from "./components/Cursor";
 import LocalTime from "./components/LocalTime";
@@ -153,6 +154,16 @@ const App = () => {
         });
       });
 
+      // Contribution cells pop in scattered, like assets streaming in
+      gsap.from(".gh-cell", {
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: { each: 0.0015, from: "random" },
+        scrollTrigger: { trigger: ".gh-grid", start: "top 88%" },
+      });
+
       // Giant CONNECT headline drifts horizontally with scroll
       gsap.to(".connect-title", {
         xPercent: -8,
@@ -183,7 +194,7 @@ const App = () => {
             className="w-9 h-9"
           />
           <span className="text-[var(--muted)] hidden md:block">
-            forlì, italy — building digital replicas of reality
+            expanding reality with digital solutions
           </span>
           <a
             href="mailto:nazzareno.giannelli@gmail.com"
@@ -212,9 +223,8 @@ const App = () => {
 
           <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
             <p className="hero-tag text-sm md:text-base text-[var(--muted)] max-w-md">
-              expanding reality with digital solutions — from product design to
-              real-time 3D, bringing real brands and products into the digital
-              space
+              from product design to real-time 3D, bringing real brands and
+              products into the digital space
               <span
                 className="inline-block w-2 h-4 ml-2 align-middle"
                 style={{
@@ -330,8 +340,7 @@ const App = () => {
         {/* ---------- connect ---------- */}
         <section className="connect-section px-6 md:px-12 py-28 md:py-40 border-t border-white/5 overflow-hidden">
           <h2 className="connect-title display text-[16vw] md:text-[12vw] whitespace-nowrap leading-none mb-14">
-            LET'S <span className="hollow-accent">BUILD</span> SOMETHING{" "}
-            <span className="hollow">REAL</span>
+            LET'S <span className="hollow-accent">BUILD</span>
           </h2>
 
           <div data-reveal className="flex flex-wrap items-center gap-4 md:gap-6">
@@ -363,6 +372,9 @@ const App = () => {
             </a>
           </div>
         </section>
+
+        {/* ---------- github activity ---------- */}
+        <GitHubCalendar />
 
         {/* ---------- footer ---------- */}
         <footer className="px-6 md:px-12 py-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
