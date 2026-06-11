@@ -77,12 +77,14 @@ body {
   -webkit-text-stroke: 1.5px rgba(236, 234, 246, 0.9);
 }
 
-.mesh-text.solid:hover {
+.mesh-text.solid:hover,
+.mesh-text.solid.mesh-active {
   color: transparent;
 }
 
 /* Hollow line does the inverse: fills solid white under the mesh */
-.mesh-text.hollow:hover {
+.mesh-text.hollow:hover,
+.mesh-text.hollow.mesh-active {
   color: var(--ink);
 }
 

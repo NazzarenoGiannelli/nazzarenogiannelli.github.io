@@ -87,6 +87,7 @@ const MeshText = ({ children, className = "", variant = "solid" }) => {
   const wrapRef = useRef(null);
   const svgRef = useRef(null);
   const meshRef = useRef(null); // { lines, dots, tweens, tickerFn }
+  const dismissRef = useRef(null);
 
   const destroyMesh = () => {
     const mesh = meshRef.current;
@@ -217,14 +218,10 @@ const MeshText = ({ children, className = "", variant = "solid" }) => {
     meshRef.current = { tweens, tickerFn: render };
   };
 
-  const onEnter = () => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-    buildMesh();
-  };
-
-  const onLeave = () => {
-    const mesh = meshRef.current;
-    if (!mesh) return;
+  const deactivate = () => {
+    clearTimeout(dismissRef.current);
+    wrapRef.current?.classList.remove("mesh-active");
+    if (!meshRef.current) return;
     gsap.to(svgRef.current, {
       opacity: 0,
       duration: 0.3,
@@ -232,14 +229,33 @@ const MeshText = ({ children, className = "", variant = "solid" }) => {
     });
   };
 
-  useEffect(() => destroyMesh, []);
+  const activate = () => {
+    if (meshRef.current) return;
+    buildMesh();
+    wrapRef.current.classList.add("mesh-active");
+    // Touch has no pointerleave worth trusting — let the easter egg
+    // burn out on its own
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      clearTimeout(dismissRef.current);
+      dismissRef.current = setTimeout(deactivate, 2600);
+    }
+  };
+
+  useEffect(
+    () => () => {
+      clearTimeout(dismissRef.current);
+      destroyMesh();
+    },
+    []
+  );
 
   return (
     <span
       ref={wrapRef}
       className={`mesh-text ${variant} relative ${className}`}
-      onPointerEnter={onEnter}
-      onPointerLeave={onLeave}
+      onPointerEnter={activate}
+      onPointerLeave={deactivate}
+      onClick={activate}
       data-hover
     >
       {children}
