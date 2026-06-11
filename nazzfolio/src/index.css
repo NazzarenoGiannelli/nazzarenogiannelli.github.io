@@ -81,9 +81,9 @@ body {
   color: transparent;
 }
 
-/* Hollow line: the stroke goes fluo */
+/* Hollow line does the inverse: fills solid white under the mesh */
 .mesh-text.hollow:hover {
-  -webkit-text-stroke-color: var(--accent-bright);
+  color: var(--ink);
 }
 
 /* ---------- cursor ---------- */
