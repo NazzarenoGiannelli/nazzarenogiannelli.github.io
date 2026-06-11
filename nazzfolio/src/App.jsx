@@ -243,7 +243,7 @@ const App = () => {
         <header className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24">
           <p className="hero-kicker text-xs md:text-sm text-[var(--muted)] mb-6">
             <span style={{ color: ACCENT }}>//</span> CTO @ R3PLICA · Unreal
-            Engine Authorized Instructor
+            Authorized Instructor
           </p>
 
           <h1 className="display text-[12.4vw] md:text-[13vw] leading-none">
