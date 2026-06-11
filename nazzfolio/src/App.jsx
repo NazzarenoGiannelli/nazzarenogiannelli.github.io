@@ -13,6 +13,7 @@ import {
   Calendar,
   ArrowUpRight,
 } from "@phosphor-icons/react";
+import logo from "./assets/Nlogo.svg";
 import Scene3D from "./components/Scene3D";
 import Cursor from "./components/Cursor";
 import LocalTime from "./components/LocalTime";
@@ -176,9 +177,11 @@ const App = () => {
       <div className="relative z-10">
         {/* ---------- nav ---------- */}
         <nav className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 md:px-12 py-5 text-xs">
-          <span className="display text-base tracking-tight">
-            NG<span style={{ color: ACCENT }}>_</span>
-          </span>
+          <img
+            src={logo}
+            alt="Nazzareno Giannelli logo"
+            className="w-9 h-9"
+          />
           <span className="text-[var(--muted)] hidden md:block">
             forlì, italy — building digital replicas of reality
           </span>
@@ -198,7 +201,7 @@ const App = () => {
             Engine Authorized Instructor
           </p>
 
-          <h1 className="display text-[7.9vw] md:text-[8.6vw] leading-none">
+          <h1 className="display text-[12.4vw] md:text-[13vw] leading-none">
             <span className="block overflow-hidden">
               <span className="hero-line block">NAZZARENO</span>
             </span>

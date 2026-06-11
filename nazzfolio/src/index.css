@@ -8,7 +8,7 @@
   --ink: #eceaf6;
   --muted: #6f6c85;
   --bg: #060608;
-  --font-display: "Syne", sans-serif;
+  --font-display: "Archivo Black", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
 }
 
@@ -33,7 +33,9 @@ body {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 800;
+  /* Archivo Black ships as a single black weight — 400 avoids faux-bold
+     synthesis, which would reintroduce stroke artifacts on hollow text */
+  font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 0.92;
   text-transform: uppercase;
