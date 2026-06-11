@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 import {
   GithubLogo,
   LinkedinLogo,
@@ -15,6 +16,7 @@ import {
 } from "@phosphor-icons/react";
 import logo from "./assets/Nlogo.svg";
 import GitHubCalendar from "./components/GitHubCalendar";
+import MeshText from "./components/MeshText";
 import Scene3D from "./components/Scene3D";
 import Cursor from "./components/Cursor";
 import LocalTime from "./components/LocalTime";
@@ -24,11 +26,31 @@ gsap.registerPlugin(ScrollTrigger);
 const ACCENT = "#5a51e8";
 
 const socialLinks = [
-  { Icon: LinkedinLogo, label: "LinkedIn", href: "https://www.linkedin.com/in/nazzgiannelli" },
-  { Icon: InstagramLogo, label: "Instagram", href: "https://www.instagram.com/nazzgiannelli" },
-  { Icon: YoutubeLogo, label: "YouTube", href: "https://www.youtube.com/@nazzgiannelli" },
-  { Icon: TiktokLogo, label: "TikTok", href: "https://www.tiktok.com/@nazzgiannelli" },
-  { Icon: ThreadsLogo, label: "Threads", href: "https://www.threads.net/@nazzgiannelli" },
+  {
+    Icon: LinkedinLogo,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/nazzgiannelli",
+  },
+  {
+    Icon: InstagramLogo,
+    label: "Instagram",
+    href: "https://www.instagram.com/nazzgiannelli",
+  },
+  {
+    Icon: YoutubeLogo,
+    label: "YouTube",
+    href: "https://www.youtube.com/@nazzgiannelli",
+  },
+  {
+    Icon: TiktokLogo,
+    label: "TikTok",
+    href: "https://www.tiktok.com/@nazzgiannelli",
+  },
+  {
+    Icon: ThreadsLogo,
+    label: "Threads",
+    href: "https://www.threads.net/@nazzgiannelli",
+  },
   { Icon: XLogo, label: "X", href: "https://x.com/nazzgiannelli" },
 ];
 
@@ -113,6 +135,14 @@ const App = () => {
   const root = useRef(null);
 
   useEffect(() => {
+    // Lenis inertial scroll, driven by GSAP's ticker so ScrollTrigger,
+    // the three.js scene and the smoothing all share one clock
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    const raf = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
+    gsap.ticker.lagSmoothing(0);
+
     const ctx = gsap.context(() => {
       // Hero choreography — gsap.from everywhere, so content is never left
       // hidden if JS dies before this runs.
@@ -122,13 +152,13 @@ const App = () => {
         .from(
           ".hero-line",
           { yPercent: 110, duration: 1, stagger: 0.12 },
-          "-=0.3"
+          "-=0.3",
         )
         .from(".hero-tag", { y: 18, opacity: 0, duration: 0.6 }, "-=0.4")
         .from(
           ".hero-social a",
           { y: 14, opacity: 0, duration: 0.4, stagger: 0.05 },
-          "-=0.3"
+          "-=0.3",
         )
         .from(".hero-scroll", { opacity: 0, duration: 0.8 }, "-=0.1");
 
@@ -177,22 +207,26 @@ const App = () => {
       });
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      gsap.ticker.remove(raf);
+      lenis.destroy();
+    };
   }, []);
 
   return (
-    <div ref={root} className="noise relative" style={{ background: "var(--bg)" }}>
+    <div
+      ref={root}
+      className="noise relative"
+      style={{ background: "var(--bg)" }}
+    >
       <Scene3D />
       <Cursor />
 
       <div className="relative z-10">
         {/* ---------- nav ---------- */}
         <nav className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 md:px-12 py-5 text-xs">
-          <img
-            src={logo}
-            alt="Nazzareno Giannelli logo"
-            className="w-9 h-9"
-          />
+          <img src={logo} alt="Nazzareno Giannelli logo" className="w-9 h-9" />
           <span className="text-[var(--muted)] hidden md:block">
             expanding reality with digital solutions
           </span>
@@ -214,17 +248,21 @@ const App = () => {
 
           <h1 className="display text-[12.4vw] md:text-[13vw] leading-none">
             <span className="block overflow-hidden">
-              <span className="hero-line block">NAZZARENO</span>
+              <MeshText className="hero-line block" variant="solid">
+                NAZZARENO
+              </MeshText>
             </span>
             <span className="block overflow-hidden">
-              <span className="hero-line hollow block">GIANNELLI</span>
+              <MeshText className="hero-line hollow block" variant="hollow">
+                GIANNELLI
+              </MeshText>
             </span>
           </h1>
 
           <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
             <p className="hero-tag text-sm md:text-base text-[var(--muted)] max-w-md">
-              from product design to real-time 3D, bringing real brands and
-              products into the digital space
+              from product design to real-time 3D, bringing real brands into the
+              digital space
               <span
                 className="inline-block w-2 h-4 ml-2 align-middle"
                 style={{
@@ -318,9 +356,7 @@ const App = () => {
                 data-reveal
                 className="group border border-white/10 p-8 md:p-10 hover:border-[var(--accent-bright)] hover:-translate-y-1.5 transition-all duration-300 bg-white/[0.02]"
               >
-                <span
-                  className="display text-5xl md:text-6xl hollow-accent block mb-8 opacity-60 group-hover:opacity-100 transition-opacity"
-                >
+                <span className="display text-5xl md:text-6xl hollow-accent block mb-8 opacity-60 group-hover:opacity-100 transition-opacity">
                   {index}
                 </span>
                 <span className="display text-xl md:text-2xl block mb-3 normal-case tracking-normal">
@@ -343,7 +379,10 @@ const App = () => {
             LET'S <span className="hollow-accent">BUILD</span>
           </h2>
 
-          <div data-reveal className="flex flex-wrap items-center gap-4 md:gap-6">
+          <div
+            data-reveal
+            className="flex flex-wrap items-center gap-4 md:gap-6"
+          >
             <a
               href="mailto:nazzareno.giannelli@gmail.com"
               data-hover
@@ -379,7 +418,10 @@ const App = () => {
         {/* ---------- footer ---------- */}
         <footer className="px-6 md:px-12 py-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
           <LocalTime />
-          <p>© {new Date().getFullYear()} Nazzareno Giannelli — v2, drafted with Fable 5</p>
+          <p>
+            © {new Date().getFullYear()} Nazzareno Giannelli — v2, drafted with
+            Fable 5
+          </p>
         </footer>
       </div>
     </div>
