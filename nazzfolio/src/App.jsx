@@ -376,7 +376,7 @@ const App = () => {
         {/* ---------- connect ---------- */}
         <section className="connect-section px-6 md:px-12 py-28 md:py-40 border-t border-white/5 overflow-hidden">
           <h2 className="connect-title display text-[16vw] md:text-[12vw] whitespace-nowrap leading-none mb-14">
-            LET'S <span className="hollow-accent">BUILD</span>
+            LET'S <span className="hollow">BUILD</span>
           </h2>
 
           <div
