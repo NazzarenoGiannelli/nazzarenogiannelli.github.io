@@ -4,45 +4,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal links page (nazzareno.xyz) - Terminal Elegance style.
+Personal landing page (nazzareno.xyz). Real-time 3D look: three.js wireframes, text-to-mesh hover on the name, GSAP scroll choreography, Lenis smooth scroll. Motion and interactivity are part of the identity (real-time 3D, digital twins), so keep them; only `prefers-reduced-motion` turns them off.
 
 - **Source**: React + Vite in `/nazzfolio`
-- **Built output**: Root folder (for GitHub Pages)
+- **Built output**: deployed by GitHub Actions from `nazzfolio/dist` (the root `index.html`/`assets` are legacy artifacts)
 
 ## Development Commands
 
 Run from `/nazzfolio` directory:
 
 ```bash
-npm run dev      # Start dev server
-npm run deploy   # Build and copy to root for GitHub Pages
-npm run lint     # Lint code
+npm run dev      # Fetch GitHub contributions + stats, start dev server
+npm run build    # Same fetches, then vite build
+npm run fetch:stats   # Refresh stars / npm numbers only
 ```
+
+`npm run lint` is currently broken: ESLint 9 needs a flat `eslint.config.js`, the repo still has `.eslintrc.cjs`.
 
 ## Tech Stack
 
-- React 19 + Vite
-- Tailwind CSS
+- React 19 + Vite, Tailwind CSS 3
+- three.js (background scene), GSAP + ScrollTrigger, Lenis
 - Phosphor Icons (`@phosphor-icons/react`)
-- Fonts: Playfair Display (titles), Fira Code (body)
+- Fonts: Archivo Black (display, uppercase, solid/hollow), IBM Plex Mono (everything else)
 
 ## Design
 
-- Dark theme: #0a0a0a background
-- Accent color: #382FBC (electric blue)
-- Terminal-style `//` section labels
-- Blinking cursor animation
+- Background `--bg: #060608`, text `--ink: #eceaf6`, body `--ink-soft: #c3c0d6`, secondary `--muted: #8f8ca8` (keep secondary text at 4.5:1 or better)
+- Accent `--accent: #382fbc`, bright accent `--accent-bright: #5a51e8`
+- Terminal-style `//` section labels, blinking cursor
+- All tokens live in `src/index.css`
 
 ## Architecture
 
-Single `App.jsx` component with data arrays for links (social, projects, products, contact). Simple, flat structure - no routing needed.
+- `src/content.js`: all copy, links and data arrays (socials, lanes, projects, tools, now). Edit copy here.
+- `src/App.jsx`: page shell, hero, marquee, proof strip, contact, footer, and the GSAP scroll choreography.
+- `src/components/`: `Nav`, `WorkWithMe`, `Projects` (+ `TiltMedia`), `Tools`, `HowIWork` (typing terminal), `GitHubCalendar`, `Scene3D`, `MeshText`, `Cursor`, `LocalTime`.
+- `scripts/fetch-github-contributions.mjs` and `scripts/fetch-stats.mjs` write `src/data/*.json` at build time (gitignored). Stats degrade to hidden if a fetch fails.
+- Media for project previews in `public/media/`, social card in `public/og.png`.
+
+## Copy rules
+
+All user-facing text in English, first person, conversational. No em dashes, no AI-tell phrasing. Update the `now` block in `content.js` monthly (it shows its date).
 
 ## Deployment
 
-Automated via GitHub Actions. Just push to master:
-
-```bash
-git add -A && git commit -m "Update" && git push
-```
-
-The workflow builds the React app and deploys to GitHub Pages automatically.
+Automated via GitHub Actions on push to master (also daily at 04:17 UTC to refresh the calendar and stats).

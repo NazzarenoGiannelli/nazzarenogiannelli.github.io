@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "predev": "node scripts/fetch-github-contributions.mjs",
+    "predev": "node scripts/fetch-github-contributions.mjs && node scripts/fetch-stats.mjs",
     "fetch:contributions": "node scripts/fetch-github-contributions.mjs",
-    "build": "node scripts/fetch-github-contributions.mjs && vite build",
+    "build": "node scripts/fetch-github-contributions.mjs && node scripts/fetch-stats.mjs && vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview --host",
-    "deploy": "vite build && rm -rf ../assets ../index.html && cp -r dist/* ../"
+    "deploy": "vite build && rm -rf ../assets ../index.html && cp -r dist/* ../",
+    "fetch:stats": "node scripts/fetch-stats.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

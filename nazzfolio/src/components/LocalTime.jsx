@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const ACCENT = '#382FBC';
+const ACCENT = '#5a51e8';
 
 const formatTime = (date) =>
   date.toLocaleTimeString('it-IT', {
@@ -17,7 +17,7 @@ const LocalTime = () => {
   }, []);
 
   return (
-    <p className="text-gray-600 text-[11px] flex items-center justify-center gap-1.5 mb-2 tabular-nums">
+    <p className="text-[var(--muted)] text-[11px] flex items-center gap-1.5 tabular-nums">
       <span style={{ color: ACCENT }}>$</span>
       <span>{time} · Italy</span>
       <span
