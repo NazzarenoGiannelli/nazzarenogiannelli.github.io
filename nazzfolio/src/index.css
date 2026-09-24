@@ -6,7 +6,10 @@
   --accent: #382fbc;
   --accent-bright: #5a51e8;
   --ink: #eceaf6;
-  --muted: #6f6c85;
+  /* body copy one step down from --ink */
+  --ink-soft: #c3c0d6;
+  /* secondary text, ~6:1 on --bg (the old #6f6c85 was ~4:1) */
+  --muted: #8f8ca8;
   --bg: #060608;
   --font-display: "Archivo Black", sans-serif;
   --font-mono: "IBM Plex Mono", monospace;
@@ -162,23 +165,293 @@ body {
   box-shadow: 0 0 12px rgba(90, 81, 232, 0.9);
 }
 
-/* Project rows: index number ghosts in, title slides on hover */
-.project-row .row-arrow {
+/* Tool rows: title slides and arrow lifts on hover */
+.tool-row .row-arrow {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     color 0.35s ease;
 }
 
-.project-row:hover .row-arrow {
+.tool-row:hover .row-arrow {
   transform: translate(6px, -6px);
   color: var(--accent-bright);
 }
 
-.project-row .row-title {
+.tool-row .row-title {
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     color 0.35s ease;
 }
 
-.project-row:hover .row-title {
+.tool-row:hover .row-title {
   transform: translateX(14px);
   color: var(--accent-bright);
+}
+
+/* ---------- nav ---------- */
+
+.site-nav {
+  transition: background-color 0.35s ease, backdrop-filter 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.site-nav.is-scrolled {
+  background: rgba(6, 6, 8, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.site-nav.is-hidden {
+  transform: translateY(-100%);
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 1px;
+  background: var(--accent-bright);
+  transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:hover::after {
+  right: 0;
+}
+
+/* ---------- shared bits ---------- */
+
+.section-label {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: var(--accent-bright);
+  transform: translateY(-3px);
+}
+
+.btn-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--ink);
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-bright);
+  color: var(--accent-bright);
+  transform: translateY(-3px);
+}
+
+.link-underline {
+  background-image: linear-gradient(var(--accent-bright), var(--accent-bright));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
+  color: var(--accent-bright);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 60;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---------- project previews ---------- */
+
+.tilt-stage {
+  perspective: 1200px;
+}
+
+.tilt-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0c0b14;
+  transform-style: preserve-3d;
+  will-change: transform;
+  --mx: 50%;
+  --my: 50%;
+}
+
+.tilt-frame img,
+.tilt-frame video {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+  filter: saturate(0.9) brightness(0.92);
+}
+
+.tilt-frame:hover img,
+.tilt-frame:hover video {
+  transform: scale(1.035);
+  filter: saturate(1) brightness(1);
+}
+
+/* soft light that follows the pointer across the preview */
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--mx) var(--my),
+    rgba(122, 108, 255, 0.28),
+    transparent 45%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 0.4s ease;
+}
+
+.tilt-frame:hover .tilt-glare {
+  opacity: 1;
+}
+
+/* viewport-style corner brackets */
+.tilt-corners {
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+  --c: var(--accent-bright);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 18px 1px,
+    linear-gradient(var(--c), var(--c)) top left / 1px 18px,
+    linear-gradient(var(--c), var(--c)) top right / 18px 1px,
+    linear-gradient(var(--c), var(--c)) top right / 1px 18px,
+    linear-gradient(var(--c), var(--c)) bottom left / 18px 1px,
+    linear-gradient(var(--c), var(--c)) bottom left / 1px 18px,
+    linear-gradient(var(--c), var(--c)) bottom right / 18px 1px,
+    linear-gradient(var(--c), var(--c)) bottom right / 1px 18px;
+  background-repeat: no-repeat;
+  opacity: 0.55;
+  transition: inset 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.tilt-frame:hover .tilt-corners {
+  inset: 16px;
+  opacity: 1;
+}
+
+.media-badge {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: #fff;
+  background: rgba(6, 6, 8, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  transform: translateY(6px);
+  opacity: 0.85;
+  transition: transform 0.35s ease, opacity 0.35s ease, border-color 0.35s ease;
+}
+
+.tilt-frame:hover .media-badge {
+  transform: translateY(0);
+  opacity: 1;
+  border-color: var(--accent-bright);
+}
+
+/* ---------- work lanes ---------- */
+
+.lane {
+  background: rgba(255, 255, 255, 0.015);
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+  --gx: 50%;
+  --gy: 50%;
+}
+
+.lane:hover {
+  border-color: rgba(90, 81, 232, 0.55);
+  background: rgba(90, 81, 232, 0.035);
+}
+
+/* wireframe floor grid, lit around the cursor */
+.lane-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(122, 108, 255, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122, 108, 255, 0.35) 1px, transparent 1px);
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(
+    220px circle at var(--gx) var(--gy),
+    #000,
+    transparent 70%
+  );
+  mask-image: radial-gradient(220px circle at var(--gx) var(--gy), #000, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.lane:hover .lane-grid {
+  opacity: 0.55;
+}
+
+/* ---------- terminal ---------- */
+
+.terminal {
+  box-shadow: 0 30px 80px -30px rgba(56, 47, 188, 0.45);
+}
+
+.term-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent-bright);
+  animation: blink 0.8s step-end infinite;
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
 }

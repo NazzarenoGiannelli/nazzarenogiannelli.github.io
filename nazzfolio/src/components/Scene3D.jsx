@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { prefersReducedMotion } from "../lib/motion";
 
 const ACCENT = new THREE.Color("#5a51e8");
 const ACCENT_DEEP = new THREE.Color("#382FBC");
@@ -117,12 +118,16 @@ const Scene3D = () => {
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       scrollProgress = max > 0 ? window.scrollY / max : 0;
+      // Full strength behind the hero, quieter behind the reading sections
+      const past = Math.min(window.scrollY / window.innerHeight, 1);
+      mount.style.opacity = String(1 - past * 0.45);
     };
 
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      if (still) renderer.render(scene, camera);
     };
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
@@ -158,8 +163,19 @@ const Scene3D = () => {
       stars.rotation.y = t * 0.008 + scrollProgress * 0.4;
 
       renderer.render(scene, camera);
-      raf = requestAnimationFrame(tick);
+      if (!still) raf = requestAnimationFrame(tick);
     };
+
+    // Reduced motion: draw one frame and stop. Hidden tab: stop burning GPU.
+    const still = prefersReducedMotion();
+    const onVisibility = () => {
+      cancelAnimationFrame(raf);
+      if (!document.hidden && !still) {
+        clock.getDelta();
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     tick();
 
     return () => {
@@ -167,6 +183,7 @@ const Scene3D = () => {
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
       primitives.forEach(({ mesh }) => {
         mesh.geometry.dispose();
         mesh.material.dispose();
@@ -181,7 +198,7 @@ const Scene3D = () => {
   return (
     <div
       ref={mountRef}
-      className="fixed inset-0 z-0 pointer-events-none"
+      className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-300"
       aria-hidden="true"
     />
   );

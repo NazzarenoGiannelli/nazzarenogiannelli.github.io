@@ -25,13 +25,18 @@ const VISIBLE_WEEKS = 35;
 const GitHubCalendar = () => {
   if (!data || data.placeholder || !data.weeks?.length) return null;
 
-  const { totalContributions, weeks } = data;
-  const visibleWeeks = weeks.slice(-VISIBLE_WEEKS);
+  const visibleWeeks = data.weeks.slice(-VISIBLE_WEEKS);
+  // Count only what the grid shows, so the number and the cells agree
+  const visibleTotal = visibleWeeks.flat().reduce((sum, day) => sum + day.c, 0);
+  const since = new Date(visibleWeeks[0][0].d + "T00:00:00Z").toLocaleDateString(
+    "en-US",
+    { month: "long", year: "numeric", timeZone: "UTC" },
+  );
 
   return (
     <section className="px-6 md:px-12 pb-28 md:pb-36">
-      <p data-reveal className="text-xs text-[var(--muted)] mb-10">
-        <span style={{ color: ACCENT }}>//</span> activity — proof of work
+      <p data-reveal className="section-label mb-10">
+        <span style={{ color: ACCENT }}>//</span> activity
       </p>
 
       <div
@@ -39,10 +44,10 @@ const GitHubCalendar = () => {
         className="flex flex-wrap items-baseline gap-x-6 gap-y-2 mb-10"
       >
         <span className="display text-6xl md:text-8xl hollow-accent">
-          {totalContributions.toLocaleString()}
+          {visibleTotal.toLocaleString("en-US")}
         </span>
         <span className="text-xs md:text-sm text-[var(--muted)]">
-          contributions / last 12 months ·{" "}
+          GitHub contributions since {since},{" "}
           <a
             href="https://github.com/NazzarenoGiannelli"
             target="_blank"
@@ -63,7 +68,7 @@ const GitHubCalendar = () => {
           gridAutoFlow: "column",
         }}
         role="img"
-        aria-label={`${totalContributions} GitHub contributions in the last year`}
+        aria-label={`${visibleTotal} GitHub contributions since ${since}`}
       >
         {visibleWeeks.flatMap((week, wi) => {
           const cells = [];

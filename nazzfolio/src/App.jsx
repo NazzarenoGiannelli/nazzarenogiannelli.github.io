@@ -5,115 +5,39 @@ import Lenis from "lenis";
 import {
   GithubLogo,
   LinkedinLogo,
-  YoutubeLogo,
-  InstagramLogo,
-  XLogo,
-  TiktokLogo,
-  ThreadsLogo,
   Envelope,
   Calendar,
   ArrowUpRight,
 } from "@phosphor-icons/react";
-import logo from "./assets/Nlogo.svg";
 import GitHubCalendar from "./components/GitHubCalendar";
 import MeshText from "./components/MeshText";
 import Scene3D from "./components/Scene3D";
 import Cursor from "./components/Cursor";
 import LocalTime from "./components/LocalTime";
+import Nav from "./components/Nav";
+import WorkWithMe from "./components/WorkWithMe";
+import Projects from "./components/Projects";
+import Tools from "./components/Tools";
+import HowIWork from "./components/HowIWork";
+import {
+  CALL_URL,
+  EMAIL,
+  GITHUB_URL,
+  LINKEDIN_URL,
+  elsewhere,
+  marquee,
+  shippedOn,
+  socialLinks,
+} from "./content";
+import { prefersReducedMotion } from "./lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const ACCENT = "#5a51e8";
-
-const socialLinks = [
-  {
-    Icon: LinkedinLogo,
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/nazzgiannelli",
-  },
-  {
-    Icon: InstagramLogo,
-    label: "Instagram",
-    href: "https://www.instagram.com/nazzgiannelli",
-  },
-  {
-    Icon: YoutubeLogo,
-    label: "YouTube",
-    href: "https://www.youtube.com/@nazzgiannelli",
-  },
-  {
-    Icon: TiktokLogo,
-    label: "TikTok",
-    href: "https://www.tiktok.com/@nazzgiannelli",
-  },
-  {
-    Icon: ThreadsLogo,
-    label: "Threads",
-    href: "https://www.threads.net/@nazzgiannelli",
-  },
-  { Icon: XLogo, label: "X", href: "https://x.com/nazzgiannelli" },
-];
-
-const projects = [
-  {
-    index: "01",
-    label: "R3PLICA",
-    desc: "Digital replicas of real products, ready for real-time",
-    href: "https://www.r3plica.space/",
-  },
-  {
-    index: "02",
-    label: "tuiboard",
-    desc: "Terminal kanban on plain markdown",
-    href: "https://tuiboard.nazzareno.xyz/",
-  },
-  {
-    index: "03",
-    label: "Art Picker",
-    desc: "Curated art discoveries",
-    href: "https://www.instagram.com/art_picker",
-  },
-];
-
-const products = [
-  {
-    index: "A",
-    label: "Blender addons",
-    desc: "Workflow shortcuts born from production needs",
-    href: "https://nazzareno.gumroad.com/?sort=most_reviewed&tags=blender%20addon",
-  },
-  {
-    index: "B",
-    label: "Unreal Engine tools",
-    desc: "Utilities for real-time pipelines",
-    href: "https://nazzareno.gumroad.com/?sort=most_reviewed&tags=unreal%20engine",
-  },
-  {
-    index: "C",
-    label: "Notion templates",
-    desc: "Systems for organized minds",
-    href: "https://nazzareno.gumroad.com/?sort=most_reviewed&tags=notion%20template",
-  },
-];
-
-const stack = [
-  "UNREAL ENGINE",
-  "DIGITAL TWINS",
-  "BLENDER",
-  "REAL-TIME 3D",
-  "REACT",
-  "PIXEL STREAMING",
-  "METAHUMAN",
-  "PRODUCT DESIGN",
-  "ARCHVIZ",
-  "AI PIPELINES",
-];
 
 const MarqueeRow = ({ items, reverse = false }) => (
   <div className="overflow-hidden whitespace-nowrap py-2 select-none">
     <div className={`marquee-track ${reverse ? "reverse" : ""}`}>
       {[0, 1].map((copy) => (
-        <div key={copy} className="flex shrink-0">
+        <div key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
           {items.map((item, i) => (
             <span
               key={`${copy}-${i}`}
@@ -122,7 +46,7 @@ const MarqueeRow = ({ items, reverse = false }) => (
               <span className={i % 2 === 0 ? "hollow" : "text-[var(--ink)]"}>
                 {item}
               </span>
-              <span style={{ color: ACCENT }}>✦</span>
+              <span className="text-[var(--accent-bright)]">✦</span>
             </span>
           ))}
         </div>
@@ -135,52 +59,110 @@ const App = () => {
   const root = useRef(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     // Lenis inertial scroll, driven by GSAP's ticker so ScrollTrigger,
     // the three.js scene and the smoothing all share one clock
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: true, anchors: true });
     lenis.on("scroll", ScrollTrigger.update);
     const raf = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
     const ctx = gsap.context(() => {
-      // Hero choreography — gsap.from everywhere, so content is never left
+      // Hero choreography: gsap.from everywhere, so content is never left
       // hidden if JS dies before this runs.
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
         .from(".hero-kicker", { y: 24, opacity: 0, duration: 0.7 })
-        .from(
-          ".hero-line",
-          { yPercent: 110, duration: 1, stagger: 0.12 },
-          "-=0.3",
-        )
+        .from(".hero-line", { yPercent: 110, duration: 1, stagger: 0.12 }, "-=0.3")
         .from(".hero-tag", { y: 18, opacity: 0, duration: 0.6 }, "-=0.4")
-        .from(
-          ".hero-social a",
-          { y: 14, opacity: 0, duration: 0.4, stagger: 0.05 },
-          "-=0.3",
-        )
+        .from(".hero-cta > *", { y: 14, opacity: 0, duration: 0.45, stagger: 0.06 }, "-=0.35")
+        .from(".hero-social a", { y: 14, opacity: 0, duration: 0.4, stagger: 0.05 }, "-=0.3")
         .from(".hero-scroll", { opacity: 0, duration: 0.8 }, "-=0.1");
 
-      // Section labels + content reveal on scroll
+      // Section labels + copy reveal on scroll
       gsap.utils.toArray("[data-reveal]").forEach((el) => {
         gsap.from(el, {
           y: 40,
           opacity: 0,
           duration: 0.9,
           ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 85%" },
+          scrollTrigger: { trigger: el, start: "top 88%" },
         });
       });
 
-      gsap.utils.toArray(".project-row").forEach((row, i) => {
-        gsap.from(row, {
-          y: 60,
+      // Proof strip: names flicker on like assets resolving in a viewport
+      gsap.from(".proof-item", {
+        opacity: 0,
+        y: 10,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.out",
+        scrollTrigger: { trigger: ".proof-strip", start: "top 90%" },
+      });
+
+      // Lanes rise in, then their items stream in one by one
+      gsap.utils.toArray(".lane").forEach((lane, i) => {
+        gsap.from(lane, {
+          y: 70,
           opacity: 0,
-          duration: 0.8,
-          delay: i * 0.06,
+          duration: 1,
+          delay: i * 0.1,
           ease: "power3.out",
-          scrollTrigger: { trigger: row, start: "top 90%" },
+          scrollTrigger: { trigger: lane, start: "top 88%" },
+        });
+        gsap.from(lane.querySelectorAll(".lane-item"), {
+          x: -16,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.07,
+          delay: 0.35 + i * 0.1,
+          ease: "power2.out",
+          scrollTrigger: { trigger: lane, start: "top 80%" },
+        });
+      });
+
+      // Projects: the preview opens from the bottom edge like a viewport
+      // resolving, with the content settling from a slight zoom. No rotation
+      // here, the tilt belongs to the cursor only.
+      gsap.utils.toArray(".project").forEach((project) => {
+        const stage = project.querySelector(".tilt-stage");
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: project, start: "top 85%" },
+          defaults: { ease: "power3.out" },
+        });
+        tl.fromTo(
+          stage,
+          { clipPath: "inset(100% 0% 0% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 0.85,
+            ease: "power4.out",
+            // leave no clip behind, so cursor tilt can use the full frame
+            clearProps: "clipPath",
+          },
+        )
+          .from(
+            stage.querySelector(".tilt-frame"),
+            { scale: 1.12, duration: 1.1 },
+            0,
+          )
+          .from(
+            project.querySelectorAll(".project-copy > *"),
+            { y: 26, opacity: 0, duration: 0.7, stagger: 0.07 },
+            0.15,
+          );
+      });
+
+      gsap.utils.toArray(".tool-row").forEach((row, i) => {
+        gsap.from(row, {
+          y: 40,
+          opacity: 0,
+          duration: 0.7,
+          delay: i * 0.05,
+          ease: "power3.out",
+          scrollTrigger: { trigger: row, start: "top 92%" },
         });
       });
 
@@ -215,35 +197,21 @@ const App = () => {
   }, []);
 
   return (
-    <div
-      ref={root}
-      className="noise relative"
-      style={{ background: "var(--bg)" }}
-    >
+    <div ref={root} id="top" className="noise relative" style={{ background: "var(--bg)" }}>
       <Scene3D />
       <Cursor />
+      <a href="#work" className="skip-link">
+        Skip to content
+      </a>
 
       <div className="relative z-10">
-        {/* ---------- nav ---------- */}
-        <nav className="fixed top-0 inset-x-0 z-40 flex items-center justify-between px-6 md:px-12 py-5 text-xs">
-          <img src={logo} alt="Nazzareno Giannelli logo" className="w-9 h-9" />
-          <span className="text-[var(--muted)] hidden md:block">
-            expanding reality with digital solutions
-          </span>
-          <a
-            href="mailto:nazzareno.giannelli@gmail.com"
-            data-hover
-            className="border border-[var(--muted)]/40 px-4 py-1.5 hover:border-[var(--accent-bright)] hover:text-[var(--accent-bright)] transition-colors"
-          >
-            say hi ↗
-          </a>
-        </nav>
+        <Nav />
 
         {/* ---------- hero ---------- */}
-        <header className="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24">
+        <header className="min-h-[100svh] flex flex-col justify-center px-6 md:px-12 pt-28 pb-12">
           <p className="hero-kicker text-xs md:text-sm text-[var(--muted)] mb-6">
-            <span style={{ color: ACCENT }}>//</span> CTO @ R3PLICA · Unreal
-            Authorized Instructor
+            <span className="text-[var(--accent-bright)]">//</span> CTO at
+            R3PLICA, Unreal Authorized Instructor
           </p>
 
           <h1 className="display text-[12.4vw] md:text-[13vw] leading-none">
@@ -259,165 +227,173 @@ const App = () => {
             </span>
           </h1>
 
-          <div className="mt-8 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-            <p className="hero-tag text-sm md:text-base text-[var(--muted)] max-w-md">
-              from product design to real-time 3D, bringing real brands into the
-              digital space
-              <span
-                className="inline-block w-2 h-4 ml-2 align-middle"
-                style={{
-                  backgroundColor: ACCENT,
-                  animation: "blink 0.8s step-end infinite",
-                }}
-              />
-            </p>
+          <div className="mt-10 grid md:grid-cols-12 gap-10 md:items-end">
+            <div className="md:col-span-7">
+              <p className="hero-tag text-base md:text-xl text-[var(--ink)] leading-relaxed max-w-2xl">
+                I build real-time 3D and the AI systems around it. Most days
+                that's R3PLICA, a catalog of real furniture as digital twins
+                that AI agents can actually read. The rest goes into small
+                tools like tuiboard.
+                <span className="inline-block w-2 h-4 ml-2 align-middle bg-[var(--accent-bright)] animate-[blink_0.8s_step-end_infinite]" />
+              </p>
 
-            <div className="hero-social flex gap-5">
-              {socialLinks.map(({ Icon, label, href }) => (
+              <div className="hero-cta flex flex-wrap gap-4 mt-8">
                 <a
-                  key={label}
-                  href={href}
+                  href="#work"
+                  data-hover
+                  className="btn-primary flex items-center gap-3 px-6 py-3.5 text-sm"
+                >
+                  What I can build for you
+                </a>
+                <a
+                  href={CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={label}
                   data-hover
-                  className="text-[var(--muted)] hover:text-[var(--accent-bright)] transition-colors duration-200"
+                  className="btn-ghost flex items-center gap-3 px-6 py-3.5 text-sm"
                 >
-                  <Icon size={22} weight="regular" />
+                  <Calendar size={18} /> Book a call
                 </a>
-              ))}
+              </div>
+            </div>
+
+            <div className="md:col-span-5 flex md:justify-end">
+              <div className="hero-social flex gap-6">
+                {socialLinks.map(({ Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    title={label}
+                    data-hover
+                    className="text-[var(--muted)] hover:text-[var(--accent-bright)] transition-colors duration-200"
+                  >
+                    <Icon size={24} weight="regular" />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="hero-scroll mt-16 md:mt-24 text-[10px] tracking-[0.3em] text-[var(--muted)]">
+          <div className="hero-scroll mt-14 md:mt-20 text-[10px] tracking-[0.3em] text-[var(--muted)]">
             SCROLL ↓
           </div>
         </header>
 
         {/* ---------- stack marquee ---------- */}
-        <section className="py-10 border-y border-white/5">
-          <MarqueeRow items={stack} />
-          <MarqueeRow items={stack} reverse />
+        <section aria-label="What I work with" className="py-10 border-y border-white/5">
+          <MarqueeRow items={marquee} />
+          <MarqueeRow items={marquee} reverse />
         </section>
 
-        {/* ---------- projects ---------- */}
-        <section className="px-6 md:px-12 py-28 md:py-36">
-          <p data-reveal className="text-xs text-[var(--muted)] mb-10">
-            <span style={{ color: ACCENT }}>//</span> projects — where to find
-            my work
+        {/* ---------- proof strip ---------- */}
+        <section
+          aria-label="Where my work is published"
+          className="proof-strip px-6 md:px-12 py-10 border-b border-white/5 flex flex-col md:flex-row md:items-center gap-6 md:gap-12"
+        >
+          <p className="section-label shrink-0">
+            <span className="text-[var(--accent-bright)]">//</span> shipped on,
+            written about in
           </p>
-
-          <div className="border-t border-white/10">
-            {projects.map(({ index, label, desc, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-hover
-                className="project-row group flex items-baseline gap-6 md:gap-12 border-b border-white/10 py-8 md:py-12"
-              >
-                <span
-                  className="text-xs md:text-sm shrink-0"
-                  style={{ color: ACCENT }}
-                >
-                  {index}
-                </span>
-                <span className="row-title display text-4xl md:text-7xl flex-1">
-                  {label}
-                </span>
-                <span className="hidden md:block text-sm text-[var(--muted)] max-w-xs text-right">
-                  {desc}
-                </span>
-                <ArrowUpRight
-                  size={28}
-                  className="row-arrow text-[var(--muted)] shrink-0 self-center"
-                />
-              </a>
+          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
+            {shippedOn.map(({ label, href }) => (
+              <li key={label} className="proof-item">
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-hover
+                    className="text-[var(--ink-soft)] hover:text-[var(--accent-bright)] transition-colors"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <span className="text-[var(--ink-soft)]">{label}</span>
+                )}
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
-        {/* ---------- products ---------- */}
-        <section className="px-6 md:px-12 pb-28 md:pb-36">
-          <p data-reveal className="text-xs text-[var(--muted)] mb-10">
-            <span style={{ color: ACCENT }}>//</span> products — tools I sell
-            online
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            {products.map(({ index, label, desc, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-hover
-                data-reveal
-                className="group border border-white/10 p-8 md:p-10 hover:border-[var(--accent-bright)] hover:-translate-y-1.5 transition-all duration-300 bg-white/[0.02]"
-              >
-                <span className="display text-5xl md:text-6xl hollow-accent block mb-8 opacity-60 group-hover:opacity-100 transition-opacity">
-                  {index}
-                </span>
-                <span className="display text-xl md:text-2xl block mb-3 normal-case tracking-normal">
-                  {label}
-                </span>
-                <span className="text-xs text-[var(--muted)] block mb-6">
-                  {desc}
-                </span>
-                <span className="text-xs flex items-center gap-1 text-[var(--muted)] group-hover:text-[var(--accent-bright)] transition-colors">
-                  gumroad <ArrowUpRight size={14} />
-                </span>
-              </a>
-            ))}
-          </div>
-        </section>
+        <WorkWithMe />
+        <Projects />
+        <Tools />
+        <HowIWork />
+        <GitHubCalendar />
 
         {/* ---------- connect ---------- */}
-        <section className="connect-section px-6 md:px-12 py-28 md:py-40 border-t border-white/5 overflow-hidden">
-          <h2 className="connect-title display text-[16vw] md:text-[12vw] whitespace-nowrap leading-none mb-14">
+        <section
+          id="contact"
+          className="connect-section px-6 md:px-12 py-28 md:py-40 border-t border-white/5 overflow-hidden"
+        >
+          <h2 className="connect-title display text-[16vw] md:text-[12vw] whitespace-nowrap leading-none mb-10">
             LET'S <span className="hollow">BUILD</span>
           </h2>
 
-          <div
-            data-reveal
-            className="flex flex-wrap items-center gap-4 md:gap-6"
-          >
+          <p data-reveal className="text-base md:text-xl text-[var(--ink-soft)] max-w-2xl mb-12">
+            Got a project, a question about Unreal or a Claude Code setup you
+            want a second opinion on? Write me, or grab a slot on my calendar.
+          </p>
+
+          <div data-reveal className="flex flex-wrap items-center gap-4 md:gap-6">
             <a
-              href="mailto:nazzareno.giannelli@gmail.com"
+              href={`mailto:${EMAIL}`}
               data-hover
-              className="flex items-center gap-3 px-7 py-4 text-sm font-medium transition-transform duration-300 hover:-translate-y-1"
-              style={{ background: "#382FBC", color: "#fff" }}
+              className="btn-primary flex items-center gap-3 px-7 py-4 text-sm font-medium"
             >
-              <Envelope size={18} /> nazzareno.giannelli@gmail.com
+              <Envelope size={18} /> {EMAIL}
             </a>
             <a
-              href="https://tidycal.com/nazzareno"
+              href={CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
               data-hover
-              className="flex items-center gap-3 px-7 py-4 text-sm border border-white/20 hover:border-[var(--accent-bright)] hover:text-[var(--accent-bright)] transition-colors"
+              className="btn-ghost flex items-center gap-3 px-7 py-4 text-sm"
             >
-              <Calendar size={18} /> book a call
+              <Calendar size={18} /> Book a call
             </a>
             <a
-              href="https://github.com/NazzarenoGiannelli"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               data-hover
-              className="flex items-center gap-3 px-7 py-4 text-sm border border-white/20 hover:border-[var(--accent-bright)] hover:text-[var(--accent-bright)] transition-colors"
+              className="btn-ghost flex items-center gap-3 px-7 py-4 text-sm"
             >
-              <GithubLogo size={18} /> github
+              <LinkedinLogo size={18} /> LinkedIn
+            </a>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-hover
+              className="btn-ghost flex items-center gap-3 px-7 py-4 text-sm"
+            >
+              <GithubLogo size={18} /> GitHub
             </a>
           </div>
         </section>
 
-        {/* ---------- github activity ---------- */}
-        <GitHubCalendar />
-
         {/* ---------- footer ---------- */}
-        <footer className="px-6 md:px-12 py-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[var(--muted)]">
+        <footer className="px-6 md:px-12 py-10 border-t border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-6 text-xs text-[var(--muted)]">
           <LocalTime />
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {elsewhere.map(({ label, href }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-hover
+                  className="hover:text-[var(--ink)] transition-colors inline-flex items-center gap-1"
+                >
+                  {label} <ArrowUpRight size={11} />
+                </a>
+              </li>
+            ))}
+          </ul>
           <p>© {new Date().getFullYear()} Nazzareno Giannelli</p>
         </footer>
       </div>
