@@ -148,6 +148,28 @@ export const projects = [
     },
   },
   {
+    id: "digital-humans",
+    role: "with the Blits.ai team",
+    title: "Digital humans",
+    body: "Real-time MetaHumans you can talk to, streamed to a browser or a big screen. I work on the character and the Unreal side of it, from the face to the Pixel Streaming setup that gets it in front of people.",
+    facts: [
+      "Sophia for Mastercard, launched in Milan and covered by Wired Italia",
+      "Built in Unreal with MetaHuman and Character Creator",
+    ],
+    links: [
+      {
+        label: "Wired Italia on Sophia",
+        href: "https://www.wired.it/article/mastercard-intelligenza-artificiale-sophia-pagamenti/",
+      },
+      { label: "book a call", href: CALL_URL },
+    ],
+    media: {
+      type: "image",
+      src: "/media/digital-human.jpg",
+      alt: "A real-time digital human rendered in Unreal Engine",
+    },
+  },
+  {
     id: "tuiboard",
     role: "open source, MIT",
     title: "tuiboard",
