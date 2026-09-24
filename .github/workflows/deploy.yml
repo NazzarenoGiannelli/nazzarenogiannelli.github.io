@@ -5,7 +5,8 @@ on:
     branches: [master]
   workflow_dispatch:
   schedule:
-    # Refresh GitHub contributions calendar daily at 04:17 UTC
+    # Daily rebuild at 04:17 UTC: refreshes the contributions calendar and
+    # the live stats (stars, npm, Gumroad ratings)
     - cron: '17 4 * * *'
 
 permissions:
@@ -63,3 +64,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # GitHub disables scheduled workflows after 60 days without repo activity,
+  # which froze the calendar on 2026-08-11. Re-enabling the workflow through
+  # the API on every scheduled run resets that timer, with no dummy commits.
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Keep the daily schedule alive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/deploy.yml/enable"

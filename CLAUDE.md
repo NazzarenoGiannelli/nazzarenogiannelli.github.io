@@ -49,4 +49,4 @@ All user-facing text in English, first person, conversational. No em dashes, no 
 
 ## Deployment
 
-Automated via GitHub Actions on push to master (also daily at 04:17 UTC to refresh the calendar and stats).
+Automated via GitHub Actions on push to master, plus a daily rebuild at 04:17 UTC that refreshes the calendar and stats. A `keepalive` job re-enables the workflow on each scheduled run, because GitHub disables scheduled workflows after 60 days without repo activity (that is what froze the site on 2026-08-11).
