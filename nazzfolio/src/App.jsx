@@ -123,25 +123,36 @@ const App = () => {
         });
       });
 
-      // Projects: the preview assembles from a flat plane into place,
-      // the copy follows
+      // Projects: the preview opens from the bottom edge like a viewport
+      // resolving, with the content settling from a slight zoom. No rotation
+      // here, the tilt belongs to the cursor only.
       gsap.utils.toArray(".project").forEach((project) => {
+        const stage = project.querySelector(".tilt-stage");
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: project, start: "top 80%" },
+          scrollTrigger: { trigger: project, start: "top 85%" },
           defaults: { ease: "power3.out" },
         });
-        tl.from(project.querySelector(".tilt-stage"), {
-          rotationX: 28,
-          y: 90,
-          opacity: 0,
-          scale: 0.94,
-          duration: 1.2,
-          transformPerspective: 1200,
-        }).from(
-          project.querySelectorAll(".project-copy > *"),
-          { y: 26, opacity: 0, duration: 0.7, stagger: 0.07 },
-          "-=0.85",
-        );
+        tl.fromTo(
+          stage,
+          { clipPath: "inset(100% 0% 0% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 0.85,
+            ease: "power4.out",
+            // leave no clip behind, so cursor tilt can use the full frame
+            clearProps: "clipPath",
+          },
+        )
+          .from(
+            stage.querySelector(".tilt-frame"),
+            { scale: 1.12, duration: 1.1 },
+            0,
+          )
+          .from(
+            project.querySelectorAll(".project-copy > *"),
+            { y: 26, opacity: 0, duration: 0.7, stagger: 0.07 },
+            0.15,
+          );
       });
 
       gsap.utils.toArray(".tool-row").forEach((row, i) => {
