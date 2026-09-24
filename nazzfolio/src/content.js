@@ -174,46 +174,50 @@ export const projects = [
   },
 ];
 
+// Proof helpers for the tools list: each returns null when the build
+// couldn't fetch the number, so the line just doesn't show.
+const gumroadRating = (s, permalink) => {
+  const r = s?.gumroad?.[permalink];
+  if (!r?.count) return null;
+  return `${r.average.toFixed(1)} from ${r.count} rating${r.count === 1 ? "" : "s"}`;
+};
+const githubStars = (s, repo) =>
+  s?.stars?.[repo] ? `${s.stars[repo]} ★` : null;
+const proofOf = (...parts) => parts.filter(Boolean).join(", ") || null;
+
 export const tools = [
   {
     name: "CoordiKnight",
     what: "Copies object transforms from Blender to Unreal Engine",
-    proof: (s) =>
-      ["5.0 from 17 ratings", s?.stars?.coordiknight && `${s.stars.coordiknight} ★`]
-        .filter(Boolean)
-        .join(", "),
+    proof: (s) => proofOf(gumroadRating(s, "uyWlt"), githubStars(s, "coordiknight")),
     href: "https://nazzareno.gumroad.com/l/uyWlt",
     where: "Blender",
   },
   {
     name: "MatSlotCleaner",
     what: "Removes unused material slots from every selected mesh in one click",
-    proof: (s) => s?.stars?.matslotcleaner && `${s.stars.matslotcleaner} ★`,
+    proof: (s) => proofOf(gumroadRating(s, "VSlNF"), githubStars(s, "matslotcleaner")),
     href: "https://github.com/NazzarenoGiannelli/matslotcleaner",
     where: "Blender",
   },
   {
     name: "Editor Utility Blueprints",
     what: "A free set of editor utilities for everyday Unreal work",
-    proof: () => "5.0 from 5 ratings",
+    proof: (s) => proofOf(gumroadRating(s, "HxpOt")),
     href: "https://nazzareno.gumroad.com/l/HxpOt",
     where: "Unreal",
   },
   {
     name: "Image to WebP",
     what: "Converts whole folders of images to WebP, from a GUI or the command line",
-    proof: (s) =>
-      s?.stars?.["image-to-webp-converter"] &&
-      `${s.stars["image-to-webp-converter"]} ★`,
+    proof: (s) => proofOf(githubStars(s, "image-to-webp-converter")),
     href: "https://github.com/NazzarenoGiannelli/image-to-webp-converter",
     where: "Python",
   },
   {
     name: "Terracotta Dark",
     what: "A warm dark theme for Obsidian, inspired by Claude Desktop",
-    proof: (s) =>
-      s?.stars?.["obsidian-claude-dark-theme"] &&
-      `${s.stars["obsidian-claude-dark-theme"]} ★`,
+    proof: (s) => proofOf(githubStars(s, "obsidian-claude-dark-theme")),
     href: "https://github.com/NazzarenoGiannelli/obsidian-claude-dark-theme",
     where: "Obsidian",
   },

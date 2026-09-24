@@ -40,7 +40,7 @@ npm run fetch:stats   # Refresh stars / npm numbers only
 - `src/content.js`: all copy, links and data arrays (socials, lanes, projects, tools, now). Edit copy here.
 - `src/App.jsx`: page shell, hero, marquee, proof strip, contact, footer, and the GSAP scroll choreography.
 - `src/components/`: `Nav`, `WorkWithMe`, `Projects` (+ `TiltMedia`), `Tools`, `HowIWork` (typing terminal), `GitHubCalendar`, `Scene3D`, `MeshText`, `Cursor`, `LocalTime`.
-- `scripts/fetch-github-contributions.mjs` and `scripts/fetch-stats.mjs` write `src/data/*.json` at build time (gitignored). Stats degrade to hidden if a fetch fails.
+- `scripts/fetch-github-contributions.mjs` and `scripts/fetch-stats.mjs` write `src/data/*.json` at build time (gitignored). Stats cover GitHub stars, npm downloads/version and Gumroad ratings (read from the `data-page` JSON on the public profile, keyed by product permalink). Any number that fails to fetch is hidden.
 - Media for project previews in `public/media/`, social card in `public/og.png`.
 
 ## Copy rules
