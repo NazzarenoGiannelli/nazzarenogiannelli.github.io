@@ -173,7 +173,7 @@ export const projects = [
     id: "tuiboard",
     role: "open source, MIT",
     title: "tuiboard",
-    body: "A keyboard-first kanban for the terminal that reads and writes plain markdown files. It also has a day planner, an agenda synced with Google Calendar and a live view of what your coding agents are doing.",
+    body: "Four tools in one terminal, on plain markdown files: kanban boards, a Today/Tomorrow planner, an agenda you can drag time blocks around on (synced with Google Calendar) and one live list of what your coding agents are doing.",
     facts: [
       (s) =>
         s?.stars?.tuiboard ? `${s.stars.tuiboard} stars on GitHub` : null,
@@ -189,8 +189,8 @@ export const projects = [
     ],
     media: {
       type: "image",
-      src: "/media/tuiboard.jpg",
-      alt: "tuiboard running in a terminal: kanban columns, agenda and live agents",
+      src: "/media/tuiboard-dashboard.jpg",
+      alt: "tuiboard in a terminal: a Today/Tomorrow planner, kanban columns, a live list of coding agents and the agenda with overlapping time blocks",
       href: "https://tuiboard.nazzareno.xyz/",
     },
   },
