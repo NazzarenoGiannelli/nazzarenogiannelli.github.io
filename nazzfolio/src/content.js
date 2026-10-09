@@ -170,6 +170,26 @@ export const projects = [
     },
   },
   {
+    id: "greetkins",
+    role: "personal project, early preview",
+    title: "Greetkins",
+    body: "Small talking characters that live in a corner of a website. You ask out loud or type, and a Greetkin answers by voice, shows you pictures and options, helps you choose and walks you to the site's own checkout. I draw them live in the browser, so each one gets its own look, its own voice and a little room of its own.",
+    facts: [
+      "A character drawn in the browser with three.js, not a video",
+      "About a second from your last word to its first, measured on my own machine",
+      "The preview plays a recorded tour. The live voice isn't online yet",
+    ],
+    links: [
+      { label: "greetkins.pages.dev", href: "https://greetkins.pages.dev/" },
+    ],
+    media: {
+      type: "image",
+      src: "/media/greetkins-tour.jpg",
+      alt: "The Greetkins page: a small character in the corner of the page talks and shows a card with pictures of other characters of the family",
+      href: "https://greetkins.pages.dev/",
+    },
+  },
+  {
     id: "tuiboard",
     role: "open source, MIT",
     title: "tuiboard",
@@ -192,6 +212,30 @@ export const projects = [
       src: "/media/tuiboard-dashboard.jpg",
       alt: "tuiboard in a terminal: a Today/Tomorrow planner, kanban columns, a live list of coding agents and the agenda with overlapping time blocks",
       href: "https://tuiboard.nazzareno.xyz/",
+    },
+  },
+  {
+    id: "sidecr",
+    role: "open source, MIT",
+    title: "Sidecr",
+    body: "A companion window for the herdr terminal multiplexer. It shows the Claude Code conversation of the pane you're in, so you can read it comfortably, reply from the window and dismiss it with Esc, without leaving the terminal.",
+    facts: [
+      "A herdr plugin: herdr plugin install NazzarenoGiannelli/sidecr",
+      "Reads the transcripts Claude Code already writes. Nothing leaves your machine",
+      "Windows 11 and Linux, with Claude Code",
+    ],
+    links: [
+      { label: "source", href: "https://github.com/NazzarenoGiannelli/sidecr" },
+      {
+        label: "v0.1.0",
+        href: "https://github.com/NazzarenoGiannelli/sidecr/releases/tag/v0.1.0",
+      },
+    ],
+    media: {
+      type: "image",
+      src: "/media/sidecr-hero.jpg",
+      alt: "Sidecr: a window with a Claude Code conversation, a chart and a reply box, open over a herdr terminal",
+      href: "https://github.com/NazzarenoGiannelli/sidecr",
     },
   },
 ];
