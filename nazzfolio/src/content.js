@@ -180,13 +180,13 @@ export const projects = [
       "The preview plays a recorded tour. The live voice isn't online yet",
     ],
     links: [
-      { label: "greetkins.pages.dev", href: "https://greetkins.pages.dev/" },
+      { label: "greetkins.nazzareno.xyz", href: "https://greetkins.nazzareno.xyz/" },
     ],
     media: {
       type: "image",
       src: "/media/greetkins-tour.jpg",
       alt: "The Greetkins page: a small character in the corner of the page talks and shows a card with pictures of other characters of the family",
-      href: "https://greetkins.pages.dev/",
+      href: "https://greetkins.nazzareno.xyz/",
     },
   },
   {
